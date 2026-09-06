@@ -26,7 +26,7 @@ export async function clerkWebhookHandler(req: Request, res: Response) {
       body: payload,
     });
 
-    // throws error if signature is wrong or body was tampered with; only then we trust evt.
+    // throws if signature is wrong or body was tampered with; only then we trust evt.
     const evt = await verifyWebhook(request, {
       signingSecret: env.CLERK_WEBHOOK_SECRET,
     });
@@ -67,9 +67,9 @@ export async function clerkWebhookHandler(req: Request, res: Response) {
     }
 
     res.json({ ok: true });
-  } catch (error) {
-    // bad signature, malformed payload or DB error - do not leak details to the client.
-    console.error("Clerk webhook error", error);
+  } catch (err) {
+    // Bad signature, malformed payload, or DB error — do not leak details to the client.
+    console.error("Clerk webhook error", err);
     res.status(400).json({ error: "Invalid webhook" });
   }
 }

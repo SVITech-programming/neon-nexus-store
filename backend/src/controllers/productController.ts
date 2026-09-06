@@ -13,7 +13,6 @@ export async function listProducts(
       typeof req.query.category === "string" ? req.query.category.trim() : "";
 
     const activeOnly = eq(products.active, true);
-
     const whereClause = cat
       ? and(activeOnly, eq(products.category, cat))
       : activeOnly;
@@ -25,8 +24,8 @@ export async function listProducts(
       .orderBy(desc(products.createdAt));
 
     res.json({ products: rows });
-  } catch (error) {
-    next(error);
+  } catch (e) {
+    next(e);
   }
 }
 
@@ -46,8 +45,8 @@ export async function getCategories(
     );
 
     res.json({ categories });
-  } catch (error) {
-    next(error);
+  } catch (e) {
+    next(e);
   }
 }
 
@@ -67,7 +66,7 @@ export async function getProductBySlug(
       return res.status(404).json({ error: "Not found" });
 
     res.json({ product: row });
-  } catch (error) {
-    next(error);
+  } catch (e) {
+    next(e);
   }
 }
