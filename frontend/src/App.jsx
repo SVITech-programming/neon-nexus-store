@@ -1,18 +1,34 @@
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
-import "./App.css";
+import {
+  Show,
+  SignInButton,
+  SignUpButton,
+  useAuth,
+  UserButton,
+} from "@clerk/react";
+import PageLoader from "./components/PageLoader";
+import Layout from "./components/Layout";
 
 function App() {
+  const { isLoaded } = useAuth();
+
+  if (!isLoaded) return <PageLoader />;
+
   return (
     <>
-      <header>
-        <Show when="signed-out">
-          <SignInButton mode="modal" />
-          <SignUpButton mode="modal" />
-        </Show>
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
-      </header>
+      <Layout>
+        <header>
+          <Show when="signed-out">
+            <SignInButton mode="modal" />
+            <SignUpButton mode="modal" />
+          </Show>
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
+        </header>
+
+        <button className="btn btn-primary">Click me</button>
+        <button className="btn btn-secondary">Click me</button>
+      </Layout>
     </>
   );
 }
