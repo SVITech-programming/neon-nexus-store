@@ -25,9 +25,6 @@ function App() {
             <UserButton />
           </Show>
         </header>
-
-        <button className="btn btn-primary">Click me</button>
-        <button className="btn btn-secondary">Click me</button>
       </Layout>
     </>
   );
